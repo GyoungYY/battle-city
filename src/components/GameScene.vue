@@ -2,7 +2,7 @@
     <div>
         hahahh
         <battle-field-scene v-if="game.status==='stat'"></battle-field-scene>
-        <statistics-scene></statistics-scene>
+        <statistics-scene v-else></statistics-scene>
     </div>
 </template>
 <script>

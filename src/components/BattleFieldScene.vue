@@ -1,14 +1,14 @@
 <template>
     <screen>
-
+        <hud></hud>
     </screen>
 </template>
 <script>
+import Hud from "../components/HUD.vue"
 import Screen from "../components/Screen.vue"
 export default {
     data() {
         return {
-            children,
         }
     },
     methods: {
@@ -26,7 +26,8 @@ export default {
         },
     },
     components: {
-        Screen
+        Screen,
+        Hud
     }
 
 }

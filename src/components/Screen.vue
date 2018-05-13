@@ -7,7 +7,6 @@
 export default {
     data() {
         return {
-            children,
             background: '#757575',
 
         }
