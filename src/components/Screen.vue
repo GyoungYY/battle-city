@@ -13,16 +13,16 @@ export default {
     },
     methods: {
         onMouseDown() {
-            this.$emit();
+            // this.$emit("");
         },
         onMouseLeave() {
-            this.$emit();
+            // this.$emit();
         },
         onMouseMove() {
-            this.$emit();
+            // this.$emit();
         },
         onMouseUp() {
-            this.$emit();
+            // this.$emit();
         },
     }
 }
