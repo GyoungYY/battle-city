@@ -1,6 +1,6 @@
 <template>
     <g class="remaining-enemy-count-indicator" :transform="`translate(0,0)`">
-        <image-svg :child="child" :key="num" v-for="num in count" image-key="EnemyTankThumbnail" :width="8" :height="8" :transform="`translate(${8 * (num % 2)},${8 * Math.floor(num / 2)})`">
+        <image-svg :child="child" :key="num" v-for="num in count" image-key="EnemyTankThumbnail" :width="8" :height="8" :transform="`translate(${8 * ((num-1) % 2)},${8 * Math.floor((num -1)/ 2)})`">
         </image-svg>
     </g>
 </template>

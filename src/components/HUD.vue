@@ -11,7 +11,7 @@ import { BLOCK_SIZE as B, FIELD_SIZE } from '../utils/constants'
 export default {
     data() {
         return {
-            remainingEnemyCount: 3,
+            remainingEnemyCount: 6,
             show: true,
             x: FIELD_SIZE + 1.5 * B,
             y: 1.5 * B,
