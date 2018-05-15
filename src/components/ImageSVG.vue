@@ -22,10 +22,8 @@ export default {
             const markup = open + string + close
             const blob = new Blob([markup], { type: 'image/svg+xml' })
             const url = URL.createObjectURL(blob);
-            console.log(url)
             this.cache.set(this.imageKey, url)
         }
-        console.log(this.cache.get(this.imageKey))
     },
     components: {
     },
