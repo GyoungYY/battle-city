@@ -1,6 +1,11 @@
 import MapRecord from './MapRecord';
 import EagleRecord from './EagleRecord'
-import { N_MAP,BLOCK_SIZE , FIELD_SIZE,FIELD_BLOCK_SIZE } from '../utils/constants'
+import {
+  N_MAP,
+  BLOCK_SIZE,
+  FIELD_SIZE,
+  FIELD_BLOCK_SIZE
+} from '../utils/constants'
 import {
   Repeat,
   Set,
@@ -131,49 +136,49 @@ export default class StageConfig extends StageConfigRecord {
           const N = 52
 
           const part0 = (bits >> 12) & 0xf
-          part0 & 0b0001 && bricks.add(brickRow * N + brickCol + 0)
-          part0 & 0b0010 && bricks.add(brickRow * N + brickCol + 1)
-          part0 & 0b0100 && bricks.add(brickRow * N + brickCol + N)
-          part0 & 0b1000 && bricks.add(brickRow * N + brickCol + N + 1)
+          part0 & 0b0001 && (bricks = bricks.add(brickRow * N + brickCol + 0))
+          part0 & 0b0010 && (bricks = bricks.add(brickRow * N + brickCol + 1))
+          part0 & 0b0100 && (bricks = bricks.add(brickRow * N + brickCol + N))
+          part0 & 0b1000 && (bricks = bricks.add(brickRow * N + brickCol + N + 1))
 
           const part1 = (bits >> 8) & 0xf
-          part1 & 0b0001 && bricks.add(brickRow * N + brickCol + 2 + 0)
-          part1 & 0b0010 && bricks.add(brickRow * N + brickCol + 2 + 1)
-          part1 & 0b0100 && bricks.add(brickRow * N + brickCol + 2 + N)
-          part1 & 0b1000 && bricks.add(brickRow * N + brickCol + 2 + N + 1)
+          part1 & 0b0001 && (bricks = bricks.add(brickRow * N + brickCol + 2 + 0))
+          part1 & 0b0010 && (bricks = bricks.add(brickRow * N + brickCol + 2 + 1))
+          part1 & 0b0100 && (bricks = bricks.add(brickRow * N + brickCol + 2 + N))
+          part1 & 0b1000 && (bricks = bricks.add(brickRow * N + brickCol + 2 + N + 1))
 
           const part2 = (bits >> 4) & 0xf
-          part2 & 0b0001 && bricks.add((brickRow + 2) * N + brickCol + 0)
-          part2 & 0b0010 && bricks.add((brickRow + 2) * N + brickCol + 1)
-          part2 & 0b0100 && bricks.add((brickRow + 2) * N + brickCol + N)
-          part2 & 0b1000 && bricks.add((brickRow + 2) * N + brickCol + N + 1)
+          part2 & 0b0001 && (bricks = bricks.add((brickRow + 2) * N + brickCol + 0))
+          part2 & 0b0010 && (bricks = bricks.add((brickRow + 2) * N + brickCol + 1))
+          part2 & 0b0100 && (bricks = bricks.add((brickRow + 2) * N + brickCol + N))
+          part2 & 0b1000 && (bricks = bricks.add((brickRow + 2) * N + brickCol + N + 1))
 
           const part3 = (bits >> 0) & 0xf
-          part3 & 0b0001 && bricks.add((brickRow + 2) * N + brickCol + 2 + 0)
-          part3 & 0b0010 && bricks.add((brickRow + 2) * N + brickCol + 2 + 1)
-          part3 & 0b0100 && bricks.add((brickRow + 2) * N + brickCol + 2 + N)
-          part3 & 0b1000 && bricks.add((brickRow + 2) * N + brickCol + 2 + N + 1)
+          part3 & 0b0001 && (bricks = bricks.add((brickRow + 2) * N + brickCol + 2 + 0))
+          part3 & 0b0010 && (bricks = bricks.add((brickRow + 2) * N + brickCol + 2 + 1))
+          part3 & 0b0100 && (bricks = bricks.add((brickRow + 2) * N + brickCol + 2 + N))
+          part3 & 0b1000 && (bricks = bricks.add((brickRow + 2) * N + brickCol + 2 + N + 1))
         } else if (item[0] === 't') {
           const bits = parseInt(item[1], 16)
           if (bits & 0b0001) {
-            steels =  steels.add(2 * row * 26 + 2 * col)
+            steels = steels.add(2 * row * 26 + 2 * col)
           }
           if (bits & 0b0010) {
             steels = steels.add(2 * row * 26 + 2 * col + 1)
           }
           if (bits & 0b0100) {
-            steels =  steels.add((2 * row + 1) * 26 + 2 * col)
+            steels = steels.add((2 * row + 1) * 26 + 2 * col)
           }
           if (bits & 0b1000) {
             steels = steels.add((2 * row + 1) * 26 + 2 * col + 1)
           }
-          
+
         } else if (item[0] === 'r') {
-          rivers=  rivers.add(row * FIELD_BLOCK_SIZE + col)
+          rivers = rivers.add(row * FIELD_BLOCK_SIZE + col)
         } else if (item[0] === 'f') {
-          forests=  forests.add(row * FIELD_BLOCK_SIZE + col)
+          forests = forests.add(row * FIELD_BLOCK_SIZE + col)
         } else if (item[0] === 's') {
-          snows= snows.add(row * FIELD_BLOCK_SIZE + col)
+          snows = snows.add(row * FIELD_BLOCK_SIZE + col)
         } else if (item[0] === 'e') {
           if (eaglePos != null) {
             throw new Error('Eagle appears more than once')

@@ -18,13 +18,24 @@ let defaultStages = filenames
   .map(requireStage).map(StageConfig.fromRawStageConfig)
   // 按照关卡数字顺序排序
   .sortBy(s => Number(s.name));
-  
+
 export default new Vuex.Store({
   state: {
+    cache: new Map(),
     map: defaultStages.first().map
   },
   getters: {
-    map: state => state.map
+    map: state => state.map,
+    cache:state=>state.cache
+  },
+  mutations: {
+    setCache(state, {
+      key,
+      url
+    }) {
+      console.log(1)
+      state.cache.set(key, url)
+    }
   },
   modules: {
     gameScene,

@@ -11,7 +11,6 @@ export default {
 
         return {
             disabled: false,
-            cache: new Map()
         }
     },
     created() {
@@ -22,7 +21,10 @@ export default {
             const markup = open + string + close
             const blob = new Blob([markup], { type: 'image/svg+xml' })
             const url = URL.createObjectURL(blob);
-            this.cache.set(this.imageKey, url)
+            this.$store.commit('setCache',{
+                key:this.imageKey,
+                url:url
+            })
         }
     },
     components: {
@@ -31,6 +33,11 @@ export default {
         onClick() {
             this.$emit();
         },
+    },
+    computed:{
+        cache(){
+            return this.$store.getters.cache
+        }
     }
 }
 </script>
