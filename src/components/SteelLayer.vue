@@ -10,7 +10,6 @@ export default {
     props: ['steels'],
     data() {
         return {
-            B,
             x: 0,
             y: 0,
             ITEM_SIZE_MAP,
