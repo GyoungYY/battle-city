@@ -40,7 +40,6 @@ export default {
                     str += Pixel({ x: dx, y: dy, fill: '#6b0800' });
                 })
             }
-            console.log(str)
             return str;
         }
     },

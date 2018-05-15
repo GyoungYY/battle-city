@@ -1,6 +1,6 @@
 <template>
     <g className="steel-layer">
-        <steel-wall v-for="(ste,t) in steels" :key="t" :x="getRowCol(t, N_MAP.STEEL)[0] * ITEM_SIZE_MAP.STEEL" :y="getRowCol(t, N_MAP.STEEL)[1] * ITEM_SIZE_MAP.STEEL"></steel-wall>
+        <steel-wall v-for="(item,index) in steelsList" :key="index" :x="item[1] * ITEM_SIZE_MAP.STEEL" :y="item[0] * ITEM_SIZE_MAP.STEEL"></steel-wall>
     </g>
 </template>
 <script>
@@ -13,12 +13,29 @@ export default {
             x: 0,
             y: 0,
             ITEM_SIZE_MAP,
-
+            N_MAP
         }
     },
     methods: {
         getRowCol(t, N) {
             return [Math.floor(t / N), t % N]
+        }
+    },
+    mounted() {
+        console.log(this.steelsList)
+    },
+    computed: {
+        steelsList() {
+            let array = [];
+            this.steels.forEach((set,t) => {
+                if (set) {
+                    const [row, col] = this.getRowCol(t, N_MAP.STEEL)
+                    array.push([row, col]);
+                } else {
+                }
+            });
+            console.log(array);
+            return array;
         }
     },
     components: {

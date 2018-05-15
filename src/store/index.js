@@ -7,10 +7,21 @@ import MapRecord from '../types/MapRecord'
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
+import {
+  List
+} from 'immutable'
+import StageConfig from '../types/StageConfig'
+const requireStage = require.context('../stages', false, /\.json/)
+const filenames = List(requireStage.keys())
 
+let defaultStages = filenames
+  .map(requireStage).map(StageConfig.fromRawStageConfig)
+  // 按照关卡数字顺序排序
+  .sortBy(s => Number(s.name));
+  
 export default new Vuex.Store({
   state: {
-    map: new MapRecord()
+    map: defaultStages.first().map
   },
   getters: {
     map: state => state.map
