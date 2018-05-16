@@ -1,5 +1,8 @@
 <template>
-    <image :data-imageKey="imageKey" :transform="transform" :href="cache.get(imageKey)" />
+    <div>
+        <image :data-imageKey="imageKey" :transform="transform" :href="cache.get(imageKey)" />
+        <slot></slot>
+    </div>
 </template>
 <script>
 const svgns = 'http://www.w3.org/2000/svg'
