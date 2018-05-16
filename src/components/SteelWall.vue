@@ -10,7 +10,6 @@ export default {
     props: ['x', 'y'],
     data() {
         return {
-            B,
             ITEM_SIZE_MAP,
             child: ` <rect width="8px" height="8px" fill="#ADADAD" ></rect>
         <rect x="2px" y="2px" width="4px" height="4px" fill="#FFFFFF"></rect>

@@ -1,13 +1,14 @@
 <template>
-    <g className="steel-layer">
-        <steel-wall v-for="(item,index) in steelsList" :key="index" :x="item[1] * ITEM_SIZE_MAP.STEEL" :y="item[0] * ITEM_SIZE_MAP.STEEL"></steel-wall>
+    <g className="bricks-layer">
+        <brick-wall v-for="(item,index) in steelsList" :key="index" :x="item[1] * ITEM_SIZE_MAP.BRICK" :y="item[0] * ITEM_SIZE_MAP.BRICK"></brick-wall>
     </g>
 </template>
 <script>
+
 import { ITEM_SIZE_MAP, N_MAP } from '../utils/constants'
-import SteelWall from './SteelWall.vue'
+import BrickWall from './BrickWall.vue'
 export default {
-    props: ['steels'],
+    props: ['bricks'],
     data() {
         return {
             x: 0,
@@ -22,24 +23,22 @@ export default {
         }
     },
     mounted() {
-        console.log(this.steelsList)
     },
     computed: {
         steelsList() {
             let array = [];
-            this.steels.forEach((set,t) => {
+            this.bricks.forEach((set,t) => {
                 if (set) {
-                    const [row, col] = this.getRowCol(t, N_MAP.STEEL)
+                    const [row, col] = this. getRowCol(t, N_MAP.BRICK)
                     array.push([row, col]);
                 } else {
                 }
             });
-            console.log(array);
             return array;
         }
     },
     components: {
-        SteelWall
+        BrickWall
     }
 
 }

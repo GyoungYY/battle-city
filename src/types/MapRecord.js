@@ -12,6 +12,7 @@ const MapRecordBase = Record({
   restrictedAreas: IMap(),
 })
 
+
 export default class MapRecord extends MapRecordBase {
   static fromJS(object) {
     return new MapRecord(object)
