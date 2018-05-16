@@ -1,8 +1,5 @@
 <template>
-    <div>
-        <image :data-imageKey="imageKey" :transform="transform" :href="cache.get(imageKey)" />
-        <slot></slot>
-    </div>
+    <image :data-imageKey="imageKey" :transform="transform" :href="cache.get(imageKey)" />
 </template>
 <script>
 const svgns = 'http://www.w3.org/2000/svg'
@@ -24,9 +21,9 @@ export default {
             const markup = open + string + close
             const blob = new Blob([markup], { type: 'image/svg+xml' })
             const url = URL.createObjectURL(blob);
-            this.$store.commit('setCache',{
-                key:this.imageKey,
-                url:url
+            this.$store.commit('setCache', {
+                key: this.imageKey,
+                url: url
             })
         }
     },
@@ -37,14 +34,13 @@ export default {
             this.$emit();
         },
     },
-    computed:{
-        cache(){
+    computed: {
+        cache() {
             return this.$store.getters.cache
         }
     }
 }
 </script>
 <style lang="less" scoped>
-
 </style>
 
