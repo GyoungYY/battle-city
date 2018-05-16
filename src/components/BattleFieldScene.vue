@@ -6,6 +6,10 @@
             <brick-layer :bricks="bricks"></brick-layer>
             <steel-layer :steels="steels"></steel-layer>
             <eagle v-if="eagle" :x="eagle.x" :y="eagle.y" :broken="eagle.broken"></eagle>
+            <g className="tank-layer">
+                <tank v-for="tank in activeTanks" :key="tank.tankId" :tank="tank">
+                </tank>
+            </g>
         </g>
     </screen>
 </template>
@@ -18,7 +22,17 @@ import SteelLayer from './SteelLayer.vue'
 import { BLOCK_SIZE as B } from '../utils/constants'
 import Eagle from './Eagle.vue'
 import BrickLayer from './BrickLayer'
+import tanks from '../store/modules/tanks';
+import Tank from './tanks.vue'
 export default {
+    props: {
+        tank: {
+            type: Object,
+            default() {
+                return {}
+            }
+        }
+    },
     data() {
         return {
             B,
@@ -36,9 +50,16 @@ export default {
         steels() {
             return this.map.toObject().steels;
         },
-         bricks() {
+        bricks() {
             return this.map.toObject().bricks;
-        }
+        },
+        tanks() {
+            return this.$store.getters.tanks;
+        },
+        activeTanks() {
+            return this.tanks.filter(t => t.active).toObject();
+        },
+
     },
     created() {
 
@@ -46,16 +67,17 @@ export default {
     methods: {
 
     },
+    mounted(){
+    },
     components: {
         Screen,
         Hud,
         SteelLayer,
         Eagle,
-        BrickLayer
+        BrickLayer, Tank
     }
 
 }
 </script>
 <style lang="less" scoped>
-
 </style>

@@ -1,8 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import gameScene from './modules/gameScene'
+import players from './modules/players'
+import tanks from './modules/tanks'
 import MapRecord from '../types/MapRecord'
+import {
+  GameRecord
+} from '../types/game'
 // import createLogger from '../../../src/plugins/logger'
+
 
 Vue.use(Vuex)
 
@@ -22,23 +28,30 @@ let defaultStages = filenames
 export default new Vuex.Store({
   state: {
     cache: new Map(),
-    map: defaultStages.first().map
+    map: defaultStages.first().map,
+    stages: new List(),
+    game: new GameRecord(),
+    time: 0
   },
   getters: {
+    time: state => state.time,
     map: state => state.map,
-    cache:state=>state.cache
+    cache: state => state.cache,
+    stages: state => state.stages,
+    game: state => state.game,
   },
   mutations: {
     setCache(state, {
       key,
       url
     }) {
-      console.log(1)
       state.cache.set(key, url)
     }
   },
   modules: {
     gameScene,
+    players,
+    tanks
   },
   strict: debug,
 })
