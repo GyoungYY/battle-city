@@ -11,9 +11,12 @@ import './battle-city.css'
 Vue.use(Vuex)
 
 Vue.config.productionTip = false
+let renderToString = require('vue-server-renderer/basic.js');
+
+console.log(renderToString)
 
 /* eslint-disable no-new */
-new Vue({
+let a = new Vue({
   el: '#app',
   router,
   store,
@@ -22,3 +25,4 @@ new Vue({
   },
   template: '<App/>'
 })
+
