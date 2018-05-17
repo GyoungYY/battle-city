@@ -1,16 +1,23 @@
 <template>
-    <image-svg :child="child" :image-key="imageKey" :transform="calculateTankTransform(tank)" width="16" height="16">
-    </image-svg>
+    <g>
+        <image-v2 :image-key="imageKey" :transform="calculateTankTransform(tank)" width="16" height="16">
+      <tank-human></tank-human>
+        </image-v2>
+  
+    </g>
 </template>
 <script>
 import { BLOCK_SIZE, TANK_COLOR_SCHEMES } from '../utils/constants'
-import ImageSvg from '../components/ImageSVG.vue'
+import ImageV2 from '../components/ImageV2.vue'
+import TankHuman from './TankHumanBasic'
+import tanks from '../store/modules/tanks';
+import InnerImage from './InnerImage.vue'
 // const tireShapeTiming = new Timing([{ t: 80, v: 0 }, { t: 80, v: 1 }])
+
 export default {
     props: ['tank'],
     data() {
         let tank = this.tank;
-        console.log(tank)
         // const color = this.resolveTankColorConfig(tank).find(time - this.startTime);
         const color = "yellow"
         const shape = this.lastTireShape
@@ -19,7 +26,6 @@ export default {
             imageKey: "",
             lastTireShape: 0,
             startTime: this.time,
-            child:``
         }
     },
     methods: {
@@ -83,25 +89,9 @@ export default {
         resolveTankComponent(side, level) {
             let component = '';
             if (side === 'human') {
-                if (level === 'basic') {
-                    component = TankHumanBasic
-                } else if (level === 'fast') {
-                    component = TankHumanFast
-                } else if (level === 'power') {
-                    component = TankHumanPower
-                } else {
-                    component = TankHumanArmor
-                }
+                component = TankHumanBasic;
             } else {
-                if (level === 'basic') {
-                    component = TankAIBasic
-                } else if (level === 'fast') {
-                    component = TankAIFast
-                } else if (level === 'power') {
-                    component = TankAIPower
-                } else {
-                    component = TankAIArmor
-                }
+                component = TankAIBasic
             }
             return component
         }
@@ -111,10 +101,12 @@ export default {
     computed: {
         time() {
             return this.$store.getters.time;
-        }
+        },
     },
     components: {
-        ImageSvg
+        ImageV2,
+        TankHuman,
+        InnerImage
     }
 }
 </script>
