@@ -11,15 +11,12 @@ import last from 'lodash/last'
 import pull from 'lodash/pull'
 import directionController from './directionController'
 export default function humanController(playerName, config, tank) {
+  let canUpdate=true;
   let firePressing = false // 用来记录当前玩家是否按下了fire键
   let firePressed = false // 用来记录上一个tick内 玩家是否按下过fire键
   const pressed = [] // 用来记录上一个tick内, 玩家按下过的方向键
-  document.addEventListener('keydown', () => {
-    onKeyDown.call(this, event)
-  })
-  document.addEventListener('keyup', () => {
-    onKeyUp.call(this, event)
-  })
+  document.addEventListener('keydown', onKeyDown.bind(this))
+  document.addEventListener('keyup', onKeyUp.bind(this))
 
 
   // region function-definitions
@@ -27,20 +24,30 @@ export default function humanController(playerName, config, tank) {
     if (!pressed.includes(direciton)) {
       pressed.push(direciton)
     }
-    console.log(pressed);
   }
 
   function onKeyDown(event) {
     const key = event.key.toLowerCase()
+    let currentTank = this.$store.getters.tanks.filter(item => {
+      return item.tankId == tank.tankId;
+    })
+    if (currentTank.size > 0) {
+      tank = currentTank.get(1);
+    } else {
+      document.addEventListener('keydown',onKeyDown.bind(this))
+      document.addEventListener('keyup',onKeyUp.bind(this))
+      return false;
+    }
     if (key === config.fire) {
       firePressing = true
       firePressed = true
-      this.$store.commit('addNewBullets', {
-        x: tank.x,
-        y: tank.y + 5,
-        direction: 'up'
-    });
-    setInterval(this.$store.dispatch, 10, 'handleTick');
+      let bullets = {
+        x: tank.direction === "up" || tank.direction === "down" ? (tank.x + 6) : (tank.direction === "left" ? tank.x : tank.x + 16),
+        y: tank.direction === "left" || tank.direction === "right" ? (tank.y + 6) : (tank.direction === "up" ? tank.y : tank.y + 16),
+        direction: tank.direction
+      }
+      this.$store.commit('addNewBullets', bullets);
+      setInterval(this.$store.dispatch, 10, 'handleTick');
     } else if (key == config.left) {
       tryPush('left')
     } else if (key === config.right) {
@@ -50,12 +57,20 @@ export default function humanController(playerName, config, tank) {
     } else if (key === config.down) {
       tryPush('down')
     }
-    directionController.call(this, playerName, getHumanPlayerInput, tank);
+    if(!canUpdate){
+      return false
+    }
+    this.$nextTick(()=>{
+      canUpdate = true;
+      setTimeout(() => {
+        directionController.call(this, playerName, getHumanPlayerInput, tank);
+      }, 10);
+    })
   }
 
   function onKeyUp(event) {
     const key = event.key.toLowerCase()
-   
+
     if (key === config.fire) {
       firePressing = false
     } else if (key === config.left) {

@@ -107,16 +107,31 @@ const mutations = {
   tankForward(state) {
 
   },
+  changeTankDirection(state, {
+    movedTank,
+  }) {
+    state.TanksMap = state.TanksMap.map((tank) => {
+      if (tank.tankId === movedTank.tankId) {
+        return tank.update('direction',value=> movedTank.direction);
+      } else {
+        return tank;
+      }
+    })
+    console.log(state.TanksMap)
+  },
   updateTank(state, {
     movedTank,
     xy,
     updater,
     distance
   }) {
-    state.TanksMap =  state.TanksMap.map((tank) => {
-      return tank.update(xy, updater(distance));
+    state.TanksMap = state.TanksMap.map((tank) => {
+      if (tank.tankId === movedTank.tankId) {
+        return tank.update(xy, updater(distance));
+      } else {
+        return tank;
+      }
     })
-    console.log( state.TanksMap.toObject())
   }
 }
 

@@ -3,9 +3,17 @@ export const inc = amount => x => x + amount
 export const dec = amount => x => x - amount
 export const or = amount => x => x | amount
 export const add = (x, y) => x + y
+
 function move(tank) {
-  return { type: 'MOVE', tankId: tank.tankId, x: tank.x, y: tank.y, direction: tank.direction }
+  return {
+    type: 'MOVE',
+    tankId: tank.tankId,
+    x: tank.x,
+    y: tank.y,
+    direction: tank.direction
+  }
 }
+
 function getTankMoveSpeed(tank) {
   // todo 需要校准数值
   if (tank.side === 'human') {
@@ -89,8 +97,8 @@ export default function directionController(
     const n = tank.get(xy, undefined) / 8
     const useFloor = turned.set(xy, Math.floor(n) * 8)
     const useCeil = turned.set(xy, Math.ceil(n) * 8)
-    const canMoveWhenUseFloor = canTankMove(useFloor);
-    const canMoveWhenUseCeil = canTankMove(useCeil);
+    const canMoveWhenUseFloor = canTankMove(this.$store.state, useFloor);
+    const canMoveWhenUseCeil = canTankMove(this.$store.state, useCeil);
     let movedTank
     if (!canMoveWhenUseFloor) {
       movedTank = useCeil
@@ -100,11 +108,8 @@ export default function directionController(
       // use-round
       movedTank = turned.set(xy, Math.round(n) * 8)
     }
-    this.$store.commit('updateTank',{
-      movedTank:movedTank,
-      xy,
-      updater,
-      distance
+    this.$store.commit('changeTankDirection', {
+      movedTank: movedTank,
     })
     // yield put(move(movedTank))
   } else if (input.type === 'forward') {
@@ -116,12 +121,14 @@ export default function directionController(
       updater
     } = getDirectionInfo(tank.direction)
     const movedTank = tank.update(xy, updater(distance))
-    this.$store.commit('updateTank',{
-      movedTank:movedTank,
-      xy,
-      updater,
-      distance
-    })
+    if (canTankMove(this.$store.state, movedTank)) {
+      this.$store.commit('updateTank', {
+        movedTank: movedTank,
+        xy,
+        updater,
+        distance
+      })
+    }
     // if (yield select(canTankMove, movedTank)) {
     //   yield put(move(movedTank))
     //   if (!tank.moving) {

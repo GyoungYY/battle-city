@@ -29,7 +29,7 @@ function isTankCollidedWithEagle(eagle, tankTarget, threshhold) {
   return testCollide(eagleRect, tankTarget, threshhold)
 }
 
-function isTankCollidedWithBricks(bricks , tankTarget, threshhold) {
+function isTankCollidedWithBricks(bricks, tankTarget, threshhold) {
   for (const t of IndexHelper.iter('brick', tankTarget)) {
     if (bricks.get(t)) {
       const subject = IndexHelper.getRect('brick', t)
@@ -55,7 +55,7 @@ function isTankCollidedWithSteels(steels, tankTarget, threshhold) {
   return false
 }
 
-function isTankCollidedWithRivers(rivers , tankTarget, threshhold) {
+function isTankCollidedWithRivers(rivers, tankTarget, threshhold) {
   for (const t of IndexHelper.iter('river', tankTarget)) {
     if (rivers.get(t)) {
       const subject = IndexHelper.getRect('river', t)
@@ -69,7 +69,7 @@ function isTankCollidedWithRivers(rivers , tankTarget, threshhold) {
 }
 
 function isTankCollidedWithRestrictedAreas(
-  areas ,
+  areas,
   tankTarget,
   threshold,
 ) {
@@ -96,7 +96,7 @@ function isTankCollidedWithOtherTanks(
 }
 
 export default function canTankMove(state, tank, threshhold = -0.01) {
-  const {
+  let {
     tanks,
     map: {
       bricks,
@@ -106,6 +106,7 @@ export default function canTankMove(state, tank, threshhold = -0.01) {
       restrictedAreas
     }
   } = state
+  tanks = tanks.TanksMap;
   const tankRect = asRect(tank)
 
   // 判断是否位于战场内
