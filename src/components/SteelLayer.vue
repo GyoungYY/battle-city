@@ -22,7 +22,6 @@ export default {
         }
     },
     mounted() {
-        console.log(this.steelsList)
     },
     computed: {
         steelsList() {
@@ -34,7 +33,6 @@ export default {
                 } else {
                 }
             });
-            console.log(array);
             return array;
         }
     },

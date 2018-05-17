@@ -18,6 +18,7 @@ import SteelLayer from './SteelLayer.vue'
 import { BLOCK_SIZE as B } from '../utils/constants'
 import Eagle from './Eagle.vue'
 import BrickLayer from './BrickLayer'
+
 export default {
     data() {
         return {
@@ -36,7 +37,7 @@ export default {
         steels() {
             return this.map.toObject().steels;
         },
-         bricks() {
+        bricks() {
             return this.map.toObject().bricks;
         }
     },
@@ -57,5 +58,4 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-
 </style>

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import gameScene from './modules/gameScene'
+import tanks from './modules/tanks'
 import MapRecord from '../types/MapRecord'
 // import createLogger from '../../../src/plugins/logger'
 
@@ -22,7 +23,11 @@ let defaultStages = filenames
 export default new Vuex.Store({
   state: {
     cache: new Map(),
-    map: defaultStages.first().map
+    players: new Set(),
+    bullets: new Set(),
+    explosions: new Set(),
+    tanks:new Set(),
+    map: defaultStages.first().map,
   },
   getters: {
     map: state => state.map,
@@ -33,7 +38,6 @@ export default new Vuex.Store({
       key,
       url
     }) {
-      console.log(1)
       state.cache.set(key, url)
     }
   },
