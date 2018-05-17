@@ -45,6 +45,7 @@ export default new Vuex.Store({
     cache: state => state.cache,
     stages: state => state.stages,
     game: state => state.game,
+    bullets: state => state.bullets
   },
   mutations: {
     setCache(state, {

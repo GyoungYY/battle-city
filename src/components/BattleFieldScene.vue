@@ -10,6 +10,9 @@
                 <tank v-for="tank in activeTanks" :key="tank.tankId" :tank="tank">
                 </tank>
             </g>
+            <g class="bullet-layer">
+                <bullet v-for="(bullet, index) in bullets" :x="bullet.x" :y="bullet.y" :direction="bullet.direction" :key="index"></bullet>
+            </g>
         </g>
     </screen>
 </template>
@@ -24,6 +27,7 @@ import Eagle from './Eagle.vue'
 import BrickLayer from './BrickLayer'
 import tanks from '../store/modules/tanks';
 import Tank from './tanks.vue'
+import Bullet from './Bullet'
 export default {
     props: {
         tank: {
@@ -59,7 +63,9 @@ export default {
         activeTanks() {
             return this.tanks.filter(t => t.active).toObject();
         },
-
+        bullets() {
+            return this.$store.getters.bullets;
+        }
     },
     created() {
 
@@ -67,14 +73,23 @@ export default {
     methods: {
 
     },
-    mounted(){
+    mounted() {
+        this.$store.commit('addNewBullets', {
+            x: 70,
+            y: 120,
+            direction: 'up'
+        });
+        let that = this;
+        // this.$store.dispatch('handleTick');
+        // setInterval(that.$store.dispatch, 10, 'handleTick');
     },
     components: {
         Screen,
         Hud,
         SteelLayer,
         Eagle,
-        BrickLayer, Tank
+        BrickLayer, Tank,
+        Bullet
     }
 
 }

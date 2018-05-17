@@ -1,5 +1,5 @@
 import EventEmitter from 'events'
-import { BulletRecord, EagleRecord, PowerUpRecord, TankRecord } from '../types'
+import { BulletRecord, EagleRecord, TankRecord } from '../types'
 import { BLOCK_SIZE, BULLET_SIZE, FIELD_SIZE, TANK_SIZE } from './constants'
 
 // 根据坦克的位置计算子弹的生成位置
