@@ -12,7 +12,7 @@ import TankHuman from './TankHumanBasic'
 import tanks from '../store/modules/tanks';
 import InnerImage from './InnerImage.vue'
 // const tireShapeTiming = new Timing([{ t: 80, v: 0 }, { t: 80, v: 1 }])
-
+import HumerController from '../controller/HumerController'
 export default {
     props: ['tank'],
     data() {
@@ -30,7 +30,17 @@ export default {
             startTime: this.time,
         }
     },
+    created(){
+           this.humerController.call(this,'player-1', {
+            up: 'w',
+            left: 'a',
+            down: 's',
+            right: 'd',
+            fire: 'j',
+        }, this.tank);
+    },
     methods: {
+        humerController: HumerController,
         calculateTankTransform(tank) {
             let rotate
             let dx

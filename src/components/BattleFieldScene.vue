@@ -18,7 +18,6 @@
 </template>
 <script>
 
-
 import Hud from "../components/HUD.vue"
 import Screen from "../components/Screen.vue"
 import SteelLayer from './SteelLayer.vue'
@@ -43,6 +42,12 @@ export default {
             x: 0,
             y: 0,
         }
+    },
+    created() {
+   
+    },
+    mounted() {
+
     },
     computed: {
         map() {
@@ -71,7 +76,7 @@ export default {
 
     },
     methods: {
-
+       
     },
     mounted() {
         this.$store.commit('addNewBullets', {

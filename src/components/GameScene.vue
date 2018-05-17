@@ -5,6 +5,7 @@
     </div>
 </template>
 <script>
+
 import BattleFieldScene from './BattleFieldScene'
 import StatisticsScene from './StatisticsScene'
 import PlayerRecord from '../types/PlayerRecord'
@@ -20,7 +21,7 @@ export default {
         }
     },
     created() {
-
+  
     },
     mounted() {
         this.didMountOrUpdate();
@@ -35,6 +36,7 @@ export default {
         this.didMountOrUpdate();
     },
     methods: {
+        
         didMountOrUpdate() {
             const { game, stages } = this.$store.getters;
             if (game.status === 'idle' || game.status === 'gameover') {

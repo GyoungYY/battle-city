@@ -46,8 +46,6 @@ export default {
                 const close = '</svg>'
                 const markup = open + string + close
                 const blob = new Blob([markup], { type: 'image/svg+xml' })
-                window.a = blob;
-                console.log(blob)
                 const url = URL.createObjectURL(blob);
                 that.$store.commit('setCache', {
                     key: that.imageKey,

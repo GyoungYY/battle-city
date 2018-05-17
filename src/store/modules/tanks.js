@@ -103,6 +103,20 @@ const mutations = {
     } else {
       return state
     }
+  },
+  tankForward(state) {
+
+  },
+  updateTank(state, {
+    movedTank,
+    xy,
+    updater,
+    distance
+  }) {
+    state.TanksMap =  state.TanksMap.map((tank) => {
+      return tank.update(xy, updater(distance));
+    })
+    console.log( state.TanksMap.toObject())
   }
 }
 
