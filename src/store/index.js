@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import gameScene from './modules/gameScene'
 import players from './modules/players'
 import tanks from './modules/tanks'
+import bullet from './modules/bullet'
+import destroyBullets from './modules/destroyBullets'
 import MapRecord from '../types/MapRecord'
 import {
   GameRecord
@@ -31,7 +33,11 @@ export default new Vuex.Store({
     map: defaultStages.first().map,
     stages: new List(),
     game: new GameRecord(),
-    time: 0
+    time: 0,
+    players: [],
+    tanks: [],
+    bullets: [],
+    eagle: {}
   },
   getters: {
     time: state => state.time,
@@ -46,12 +52,17 @@ export default new Vuex.Store({
       url
     }) {
       state.cache.set(key, url)
+    },
+    addNewBullets(state, bullet) {
+      state.bullets.push(bullet);
     }
   },
   modules: {
     gameScene,
     players,
-    tanks
+    tanks,
+    bullet,
+    destroyBullets
   },
   strict: debug,
 })

@@ -126,6 +126,7 @@ export default class StageConfig extends StageConfigRecord {
     let eaglePos = null
     for (let row = 0; row < FIELD_BLOCK_SIZE; row += 1) {
       const line = map[row].toLowerCase().split(/ +/)
+      console.log('line', line);
       for (let col = 0; col < FIELD_BLOCK_SIZE; col += 1) {
         const item = line[col].trim()
         if (item[0] === 'b') {

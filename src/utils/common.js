@@ -8,10 +8,6 @@ export function calculateBulletStartPosition({
   x,
   y,
   direction,
-}: {
-  x: number
-  y: number
-  direction: Direction
 }) {
   if (direction === 'up') {
     return { x: x + 6, y: y - 3 }
@@ -64,9 +60,9 @@ export function getNextId(tag = '') {
 
 // 将BulletRecord/TankRecord/Eagle/PowerUpRecord转换为Rect类型对象
 export function asRect(
-  item: BulletRecord | TankRecord | EagleRecord | PowerUpRecord,
+  item,
   enlargement = 0,
-): Rect {
+) {
   if (item instanceof BulletRecord) {
     return {
       x: item.x - BULLET_SIZE / 2 * enlargement,
@@ -101,14 +97,14 @@ export function asRect(
   }
 }
 
-type UpdaterMaker = (amount: number) => (x: number) => number
-export const inc: UpdaterMaker = amount => x => x + amount
-export const dec: UpdaterMaker = amount => x => x - amount
-export const or: UpdaterMaker = amount => x => x | amount
-export const add = (x: number, y: number) => x + y
+// type UpdaterMaker = (amount: number) => (x: number) => number
+export const inc = amount => x => x + amount
+export const dec = amount => x => x - amount
+export const or = amount => x => x | amount
+export const add = (x, y) => x + y
 
-export function getDirectionInfo(direction: Direction, flipxy = false) {
-  let result: { xy: 'x' | 'y'; updater: UpdaterMaker }
+export function getDirectionInfo(direction, flipxy = false) {
+  let result;
   if (direction === 'up') {
     result = { xy: 'y', updater: dec }
   } else if (direction === 'down') {
@@ -126,7 +122,7 @@ export function getDirectionInfo(direction: Direction, flipxy = false) {
   return result
 }
 
-export function incTankLevel(tank: TankRecord) {
+export function incTankLevel(tank) {
   if (tank.level === 'basic') {
     return tank.set('level', 'fast')
   } else if (tank.level === 'fast') {
@@ -136,7 +132,7 @@ export function incTankLevel(tank: TankRecord) {
   }
 }
 
-export function getTankBulletLimit(tank: TankRecord) {
+export function getTankBulletLimit(tank) {
   if (tank.side === 'ai' || tank.level === 'basic' || tank.level === 'fast') {
     return 1
   } else {
@@ -144,7 +140,7 @@ export function getTankBulletLimit(tank: TankRecord) {
   }
 }
 
-export function getTankBulletSpeed(tank: TankRecord) {
+export function getTankBulletSpeed(tank) {
   // todo 需要校准数值
   if (tank.side === 'human') {
     if (DEV.FAST) {
@@ -166,7 +162,7 @@ export function getTankBulletSpeed(tank: TankRecord) {
   }
 }
 
-export function getTankBulletInterval(tank: TankRecord) {
+export function getTankBulletInterval(tank) {
   // todo 需要校准数值
   if (tank.level === 'basic') {
     return 300
@@ -175,7 +171,7 @@ export function getTankBulletInterval(tank: TankRecord) {
   }
 }
 
-export function getTankMoveSpeed(tank: TankRecord) {
+export function getTankMoveSpeed(tank) {
   // todo 需要校准数值
   if (tank.side === 'human') {
     return DEV.FAST ? 0.06 : 0.045
@@ -191,7 +187,7 @@ export function getTankMoveSpeed(tank: TankRecord) {
   }
 }
 
-export function getTankBulletPower(tank: TankRecord) {
+export function getTankBulletPower(tank) {
   if (tank.side === 'human' && tank.level === 'armor') {
     return 3
   } else if (tank.side === 'ai' && tank.level === 'power') {
@@ -201,31 +197,31 @@ export function getTankBulletPower(tank: TankRecord) {
   }
 }
 
-export class DefaultMap<K, V> extends Map<K, V> {
-  constructor(readonly defaulter: () => V) {
-    super()
+export class DefaultMap extends Map {
+  constructor(defaulter) {
+    super();
   }
 
-  get(key: K) {
+  get(key) {
     if (!super.has(key)) {
-      this.set(key, this.defaulter())
+      this.set(key, this.defaulter());
     }
-    return super.get(key)!
+    return super.get(key);
   }
 }
 
-export function randint(start: number, end: number) {
-  return Math.floor(Math.random() * (end - start)) + start
+export function randint(start, end) {
+  return Math.floor(Math.random() * (end - start)) + start;
 }
 
-export function* waitFor(emitter: EventEmitter, expectedType: string) {
-  let callback: any
+export function* waitFor(emitter, expectedType) {
+  let callback;
   try {
     yield new Promise(resolve => {
-      callback = resolve
-      emitter.addListener(expectedType, resolve)
+      callback = resolve;
+      emitter.addListener(expectedType, resolve);
     })
   } finally {
-    emitter.removeListener(expectedType, callback)
+    emitter.removeListener(expectedType, callback);
   }
 }

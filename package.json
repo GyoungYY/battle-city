@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "immutable": "^3.8.2",
+    "lodash": "^4.17.10",
     "normalize.css": "^8.0.0",
     "vue": "^2.5.16",
     "vue-server-renderer": "^2.5.16",
