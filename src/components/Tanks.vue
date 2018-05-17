@@ -1,75 +1,18 @@
 <template>
-    <image-svg :child="child" :image-key="imageKey" :transform="calculateTankTransform(tank)" width="16" height="16">
-    </image-svg>
+    <g>
+        <image-v2 :image-key="imageKey" :transform="calculateTankTransform(tank)" width="16" height="16">
+      <tank-human></tank-human>
+        </image-v2>
+  
+    </g>
 </template>
 <script>
 import { BLOCK_SIZE, TANK_COLOR_SCHEMES } from '../utils/constants'
-import ImageSvg from '../components/ImageSVG.vue'
+import ImageV2 from '../components/ImageV2.vue'
+import TankHuman from './TankHumanBasic'
 import tanks from '../store/modules/tanks';
+import InnerImage from './InnerImage.vue'
 // const tireShapeTiming = new Timing([{ t: 80, v: 0 }, { t: 80, v: 1 }])
-
-const TankHumanBasic = ({ transform, color, shape }) => {
-  const scheme = TANK_COLOR_SCHEMES[color]
-  const { a, b, c } = scheme
-  return (
-    <g className="tank" transform={transform}>
-      <g className="left-tire">
-        <rect x={1} y={5} width={3} height={9} fill={a} />
-        <rect x={2} y={5} width={1} height={9} fill={b} />
-        {shape === 0 ? (
-          <g className="left-tire-shape-0">
-            <Bitmap x={1} y={4} d={['abb']} scheme={scheme} />
-            <Bitmap x={1} y={14} d={['abb']} scheme={scheme} />
-            {_.range(5).map(i => (
-              <rect key={i} x={1} width={2} y={5 + 2 * i} height={1} fill={c} />
-            ))}
-          </g>
-        ) : (
-          <g className="left-tire-shape-1">
-            <Bitmap x={1} y={4} d={['acc']} scheme={scheme} />
-            <Bitmap x={1} y={14} d={['bcc']} scheme={scheme} />
-            {_.range(4).map(i => (
-              <rect key={i} x={1} width={2} y={6 + 2 * i} height={1} fill={c} />
-            ))}
-          </g>
-        )}
-      </g>
-
-      <g className="right-tire">
-        <rect x={11} y={4} width={3} height={11} fill={c} />
-        <Pixel x={11} y={4} fill={a} />
-
-        {shape === 0 ? (
-          <g className="right-tire-shape-0">
-            {_.range(6).map(i => (
-              <rect key={i} x={12} width={2} y={4 + 2 * i} height={1} fill={b} />
-            ))}
-          </g>
-        ) : (
-          <g className="right-tire-shape-1">
-            {_.range(5).map(i => (
-              <rect key={i} x={12} width={2} y={5 + 2 * i} height={1} fill={b} />
-            ))}
-          </g>
-        )}
-      </g>
-
-      <g className="tank-body">
-        <path d="M4,7 h1 v-1 h1 v2 h-1 v3 h1 v1 h1 v1 h-2 v-1 h-1 v-5" fill={a} />
-        <Pixel x={4} y={12} fill={c} />
-        <path d="M6,6 h1 v1 h3 v1 h1 v4 h-1 v1 h-3 v-1 h-1 v-1 h-1 v-3 h1 v-2" fill={b} />
-        <Pixel x={10} y={12} fill={c} />
-        <rect x={5} y={13} width={5} height={1} fill={c} />
-        <rect x={8} width={2} y={6} height={1} fill={c} />
-        <Pixel x={10} y={7} fill={c} />
-        <path d="M6,8 h2 v1 h-1 v2 h-1 v-3" fill={a} />
-        <path d="M8,9 h1 v3 h-2 v-1 h1 v-2" fill={c} />
-      </g>
-      <rect className="gun" x={7} y={2} width={1} height={5} fill={a} />
-    </g>
-  )
-}
-
 
 export default {
     props: ['tank'],
@@ -146,7 +89,7 @@ export default {
         resolveTankComponent(side, level) {
             let component = '';
             if (side === 'human') {
-              component =TankHumanBasic;
+                component = TankHumanBasic;
             } else {
                 component = TankAIBasic
             }
@@ -159,12 +102,11 @@ export default {
         time() {
             return this.$store.getters.time;
         },
-        child() {
-          return  this.resolveTankComponent(this.tank.side, this.tank.level);
-        }
     },
     components: {
-        ImageSvg
+        ImageV2,
+        TankHuman,
+        InnerImage
     }
 }
 </script>
