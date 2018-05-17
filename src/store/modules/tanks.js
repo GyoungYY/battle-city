@@ -103,6 +103,9 @@ const mutations = {
     } else {
       return state
     }
+  },
+  tankForward(state){
+
   }
 }
 
