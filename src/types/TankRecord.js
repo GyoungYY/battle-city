@@ -1,5 +1,7 @@
-import { Record } from 'immutable'
-import {Side,Direction,TankColor,TankLevel} from './index';
+import {
+  Record
+} from 'immutable'
+
 const TankRecordType = Record({
   active: true,
   tankId: 0,
@@ -9,7 +11,7 @@ const TankRecordType = Record({
   direction: 'up',
   moving: false,
   level: 'basic',
-  color:'auto',
+  color: 'auto',
   hp: 1,
   withPowerUp: false,
 
