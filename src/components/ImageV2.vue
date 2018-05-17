@@ -1,6 +1,8 @@
 
 <script>
 import Vue from 'vue';
+import Vuex from 'vuex';
+import store from '../store'
 let renderToString = require('vue-server-renderer/basic.js')
 
 const svgns = 'http://www.w3.org/2000/svg';
@@ -23,10 +25,15 @@ export default {
         let that = this;
         let inner = Vue.extend({
             render(h) {
-                return <h1>{that.$slots.default}</h1>
+                return <g>{that.$slots.default}</g>
             },
         })
+
+
+        Vue.use(Vuex)
         let a = new Vue({
+            data:{},
+            store,
             template: '<inner></inner>',
             components: {
                 inner
@@ -35,10 +42,12 @@ export default {
         renderToString(a, (e, r) => {
             if (!that.cache.has(that.imageKey)) {
                 const open = `<svg xmlns="${svgns}" width="${that.width}" height="${that.height}">`
-                const string = `<g>${that.child}</g>`
+                const string = `<g>${r}</g>`
                 const close = '</svg>'
                 const markup = open + string + close
                 const blob = new Blob([markup], { type: 'image/svg+xml' })
+                window.a = blob;
+                console.log(blob)
                 const url = URL.createObjectURL(blob);
                 that.$store.commit('setCache', {
                     key: that.imageKey,
@@ -53,7 +62,6 @@ export default {
     },
     methods: {
         onClick() {
-            this.$emit();
         },
     },
     computed: {

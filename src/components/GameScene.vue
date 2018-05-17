@@ -59,7 +59,6 @@ export default {
                         type: 'ADD_TANK',
                     }
                 })
-                console.log(this.$store)
                 //   dispatch<Action>({
                 //     type: 'START_GAME',
                 //     stageIndex: stageIndex === -1 ? 0 : stageIndex,

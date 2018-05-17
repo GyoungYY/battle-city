@@ -1,9 +1,8 @@
 <template>
     <g>
         <image-v2 :image-key="imageKey" :transform="calculateTankTransform(tank)" width="16" height="16">
-      <tank-human></tank-human>
+            <tank-human :color="color" :shape="shape"></tank-human>
         </image-v2>
-  
     </g>
 </template>
 <script>
@@ -17,12 +16,15 @@ import InnerImage from './InnerImage.vue'
 export default {
     props: ['tank'],
     data() {
+           
         let tank = this.tank;
         // const color = this.resolveTankColorConfig(tank).find(time - this.startTime);
         const color = "yellow"
         const shape = this.lastTireShape
         const imageKey = `Tank/${tank.side}/${tank.level}/${color}/${shape}`
         return {
+            color,
+            shape,
             imageKey: "",
             lastTireShape: 0,
             startTime: this.time,
