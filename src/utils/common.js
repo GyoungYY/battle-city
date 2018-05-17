@@ -1,5 +1,5 @@
 import EventEmitter from 'events'
-import { BulletRecord, EagleRecord, PowerUpRecord, TankRecord } from '../types'
+import { BulletRecord, EagleRecord, TankRecord } from '../types'
 import { BLOCK_SIZE, BULLET_SIZE, FIELD_SIZE, TANK_SIZE } from './constants'
 
 // 根据坦克的位置计算子弹的生成位置
@@ -84,15 +84,7 @@ export function asRect(
       width: BLOCK_SIZE * (1 + enlargement),
       height: BLOCK_SIZE * (1 + enlargement),
     }
-  } else if (item instanceof PowerUpRecord) {
-    DEV.ASSERT && console.assert(enlargement === -0.5)
-    return {
-      x: item.x - BLOCK_SIZE / 2 * enlargement,
-      y: item.y - BLOCK_SIZE / 2 * enlargement,
-      width: BLOCK_SIZE * (1 + enlargement),
-      height: BLOCK_SIZE * (1 + enlargement),
-    }
-  } else {
+  }  else {
     throw new Error('Cannot convert to type Rect')
   }
 }

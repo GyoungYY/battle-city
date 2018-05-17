@@ -40,6 +40,8 @@ const PowerUpName = Map({
 });
 
 export { default as TankRecord } from './TankRecord'
+export { default as BulletRecord } from './BulletRecord'
+export { default as EagleRecord } from './EagleRecord'
 export {
   Direction,
   Side,

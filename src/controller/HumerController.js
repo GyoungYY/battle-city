@@ -5,6 +5,10 @@
 //     left: string
 //     right: string
 //   }
+
+
+import last from 'lodash/last'
+import pull from 'lodash/pull'
 import directionController from './directionController'
 export default function humanController(playerName, config, tank) {
   let firePressing = false // 用来记录当前玩家是否按下了fire键
@@ -16,18 +20,18 @@ export default function humanController(playerName, config, tank) {
   document.addEventListener('keyup', () => {
     onKeyUp.call(this, event)
   })
-  directionController(playerName, getHumanPlayerInput,tank),
+
 
   // region function-definitions
   function tryPush(direciton) {
     if (!pressed.includes(direciton)) {
       pressed.push(direciton)
     }
+    console.log(pressed);
   }
 
   function onKeyDown(event) {
     const key = event.key.toLowerCase()
-    console.log(this);
     if (key === config.fire) {
       firePressing = true
       firePressed = true
@@ -40,20 +44,22 @@ export default function humanController(playerName, config, tank) {
     } else if (key === config.down) {
       tryPush('down')
     }
+    directionController.call(this, playerName, getHumanPlayerInput, tank);
   }
 
   function onKeyUp(event) {
     const key = event.key.toLowerCase()
+   
     if (key === config.fire) {
       firePressing = false
     } else if (key === config.left) {
-      pull(pressed, 'left')
+      pull(pressed, 'left');
     } else if (key === config.right) {
-      pull(pressed, 'right')
+      pull(pressed, 'right');
     } else if (key === config.up) {
-      pull(pressed, 'up')
+      pull(pressed, 'up');
     } else if (key === config.down) {
-      pull(pressed, 'down')
+      pull(pressed, 'down');
     }
   }
 
@@ -82,4 +88,61 @@ export default function humanController(playerName, config, tank) {
     }
   }
   // endregion
+}
+
+
+export const inc = amount => x => x + amount
+export const dec = amount => x => x - amount
+export const or = amount => x => x | amount
+export const add = (x, y) => x + y
+
+function direction(tank, getDirectionInfo) {
+
+}
+
+function getTankMoveSpeed(tank) {
+  // todo 需要校准数值
+  if (tank.side === 'human') {
+    return 0.045
+  } else {
+    if (tank.level === 'power') {
+      return 0.045
+    } else if (tank.level === 'fast') {
+      return 0.06
+    } else {
+      // baisc or armor
+      return 0.03
+    }
+  }
+}
+
+function getDirectionInfo(direction, flipxy = false) {
+  let result = {};
+  if (direction === 'up') {
+    result = {
+      xy: 'y',
+      updater: dec
+    }
+  } else if (direction === 'down') {
+    result = {
+      xy: 'y',
+      updater: inc
+    }
+  } else if (direction === 'left') {
+    result = {
+      xy: 'x',
+      updater: dec
+    }
+  } else if (direction === 'right') {
+    result = {
+      xy: 'x',
+      updater: inc
+    }
+  } else {
+    throw new Error('Invalid direction')
+  }
+  if (flipxy) {
+    result.xy = result.xy === 'x' ? 'y' : 'x'
+  }
+  return result
 }
