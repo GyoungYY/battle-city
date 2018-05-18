@@ -18,8 +18,8 @@
         </defs>
         <rect fill="#000000" :width="16 * B" :height="15 * B" />
         <g :transform="`scale(${scale})`">
-            <text-content content="battle" :x="1.5 * B / scale" :y="3 * B / scale" fill="url(#pattern-brickwall)"/>
-            <text-content content="city" :x="3.5 * B / scale + 1" :y="5.5 * B / scale" fill="url(#pattern-brickwall)"/>
+            <text-content content="drive" :x="2.5 * B / scale + 2" :y="3 * B / scale" fill="url(#pattern-brickwall)"/>
+            <text-content content="tank" :x="3.5 * B / scale + 1" :y="5.5 * B / scale" fill="url(#pattern-brickwall)"/>
         </g>
         <text-button content="1 player" :disabled="false" :x="5.5 * B" :y="8.5 * B" textFill="white" @on-click="onClick('play')"/>
         <text-button content="stage list" :x="5.5 * B" :disabled="true" :y="9.5 * B" textFill="white" @on-click="onClick()"/>

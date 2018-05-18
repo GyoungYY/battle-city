@@ -41,13 +41,17 @@ export default function humanController(playerName, config, tank) {
     if (key === config.fire) {
       firePressing = true
       firePressed = true
-      let bullets = {
+      let bullet = {
         x: tank.direction === "up" || tank.direction === "down" ? (tank.x + 6) : (tank.direction === "left" ? tank.x : tank.x + 16),
         y: tank.direction === "left" || tank.direction === "right" ? (tank.y + 6) : (tank.direction === "up" ? tank.y : tank.y + 16),
-        direction: tank.direction
+        direction: tank.direction,
+        tankId: tank.tankId
       }
-      this.$store.commit('addNewBullets', bullets);
-      setInterval(this.$store.dispatch, 10, 'handleTick');
+      if (!this.$store.getters.bullets.length) {
+        let tick = setInterval(this.$store.dispatch, 10, 'handleTick');
+        this.$store.commit('setTick', tick);
+      }
+      this.$store.commit('addNewBullets', bullet);
     } else if (key == config.left) {
       tryPush('left')
     } else if (key === config.right) {
