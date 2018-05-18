@@ -61,8 +61,13 @@ export default new Vuex.Store({
     }) {
       state.cache.set(key, url)
     },
-    
-    
+    updateMap(state, {
+      bricksIndex
+    }) {
+      let bricks = state.map.bricks.update(bricksIndex, value => false);
+      state.map = state.map.update('bricks', value => bricks);
+    }
+
   },
   modules: {
     gameScene,
