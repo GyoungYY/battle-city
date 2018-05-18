@@ -60,10 +60,6 @@ export default {
                         type: 'ADD_TANK',
                     }
                 })
-                //   dispatch<Action>({
-                //     type: 'START_GAME',
-                //     stageIndex: stageIndex === -1 ? 0 : stageIndex,
-                //   })
             }
         }
     }
