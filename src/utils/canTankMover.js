@@ -108,6 +108,7 @@ export default function canTankMove(state, tank, threshhold = -0.01) {
   } = state
   tanks = tanks.TanksMap;
   const tankRect = asRect(tank)
+  console.log(tankRect)
 
   // 判断是否位于战场内
   if (!isInField(tankRect)) {

@@ -107,7 +107,7 @@ export default class StageConfig extends StageConfigRecord {
    * 解析关卡文件中的地图配置.
    * 地图配置数据格式为 string[], 数组中每一个string对应地图中的一行.
    * 一行中包含16个item(由一个或多个空格分隔开来), 对应地图一行的16个block
-   * item的第一个字符标记了block的类型, 各个字母的含义见上方
+   * item的第一个字符标记了block的类型
    * item后续字符(如果存在的话)为十六进制格式, 用来表示该block中哪些部分包含了地图元素
    * 空白 XX
    * 砖块 brick  B<n>
@@ -126,7 +126,6 @@ export default class StageConfig extends StageConfigRecord {
     let eaglePos = null
     for (let row = 0; row < FIELD_BLOCK_SIZE; row += 1) {
       const line = map[row].toLowerCase().split(/ +/)
-      console.log('line', line);
       for (let col = 0; col < FIELD_BLOCK_SIZE; col += 1) {
         const item = line[col].trim()
         if (item[0] === 'b') {

@@ -117,7 +117,6 @@ const mutations = {
         return tank;
       }
     })
-    console.log(state.TanksMap)
   },
   updateTank(state, {
     movedTank,
