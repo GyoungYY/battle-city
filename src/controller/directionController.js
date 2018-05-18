@@ -17,7 +17,7 @@ function move(tank) {
 function getTankMoveSpeed(tank) {
   // todo 需要校准数值
   if (tank.side === 'human') {
-    return 0.08
+    return 0.1
   } else {
     if (tank.level === 'power') {
       return 0.045
@@ -70,7 +70,7 @@ export default function directionController(
   if (tank == null || tank.frozenTimeout > 0) {
     return;
   }
-  let delta = 10;
+  let delta = 20;
   const input = getPlayerInput(tank)
   let nextFrozenTimeout = tank.frozenTimeout <= 0 ? 0 : tank.frozenTimeout - delta
 
@@ -129,12 +129,6 @@ export default function directionController(
         distance
       })
     }
-    // if (yield select(canTankMove, movedTank)) {
-    //   yield put(move(movedTank))
-    //   if (!tank.moving) {
-    //     yield put({ type: 'START_MOVE', tankId: tank.tankId })
-    //   }
-    // }
   } else {
     throw new Error(`Invalid input: ${input}`)
   }

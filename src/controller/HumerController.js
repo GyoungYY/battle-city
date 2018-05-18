@@ -100,25 +100,7 @@ export default function humanController(playerName, config, tank) {
       }
     }
   }
-
-  function* resetFirePressedEveryTick() {
-    // 每次tick时, 都将firePressed重置
-    while (true) {
-      yield take('TICK')
-      firePressed = false
-    }
-  }
   // endregion
-}
-
-
-export const inc = amount => x => x + amount
-export const dec = amount => x => x - amount
-export const or = amount => x => x | amount
-export const add = (x, y) => x + y
-
-function direction(tank, getDirectionInfo) {
-
 }
 
 function getTankMoveSpeed(tank) {
@@ -137,33 +119,3 @@ function getTankMoveSpeed(tank) {
   }
 }
 
-function getDirectionInfo(direction, flipxy = false) {
-  let result = {};
-  if (direction === 'up') {
-    result = {
-      xy: 'y',
-      updater: dec
-    }
-  } else if (direction === 'down') {
-    result = {
-      xy: 'y',
-      updater: inc
-    }
-  } else if (direction === 'left') {
-    result = {
-      xy: 'x',
-      updater: dec
-    }
-  } else if (direction === 'right') {
-    result = {
-      xy: 'x',
-      updater: inc
-    }
-  } else {
-    throw new Error('Invalid direction')
-  }
-  if (flipxy) {
-    result.xy = result.xy === 'x' ? 'y' : 'x'
-  }
-  return result
-}
