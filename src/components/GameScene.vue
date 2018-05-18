@@ -33,7 +33,6 @@ export default {
     beforeDestroy() { },
     beforeMount() { },
     updated() {
-        this.didMountOrUpdate();
     },
     methods: {
         

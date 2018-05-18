@@ -34,17 +34,18 @@ let defaultStages = filenames
   .map(requireStage).map(StageConfig.fromRawStageConfig)
   // 按照关卡数字顺序排序
   .sortBy(s => Number(s.name));
-
+let mapObj = defaultStages.first().map;
 export default new Vuex.Store({
   state: {
     cache: new Map(),
-    map: defaultStages.first().map,
+    map: mapObj,
     stages: new List(),
     game: new GameRecord(),
     time: 0,
     players: [],
     tanks: [],
     eagle: {},
+    bricks: mapObj.bricks
   },
   getters: {
     time: state => state.time,
@@ -52,7 +53,8 @@ export default new Vuex.Store({
     cache: state => state.cache,
     stages: state => state.stages,
     game: state => state.game,
-    bullets: state => state.bullet.bullets
+    bullets: state => state.bullet.bullets,
+    bricks: state => state.bricks
   },
   mutations: {
     setCache(state, {
@@ -64,8 +66,8 @@ export default new Vuex.Store({
     updateMap(state,
       bricksIndex
     ) {
-      let bricks = state.map.bricks.update(bricksIndex, value => false);
-      state.map = state.map.update('bricks', value => bricks);
+      state.bricks = state.bricks.update(bricksIndex, value => false);
+      state.map = state.map.update('bricks', value => state.bricks);
     }
 
   },

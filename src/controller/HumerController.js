@@ -11,7 +11,7 @@ import last from 'lodash/last'
 import pull from 'lodash/pull'
 import directionController from './directionController'
 export default function humanController(playerName, config, tank) {
-  let canUpdate=true;
+  let canUpdate = true;
   let firePressing = false // 用来记录当前玩家是否按下了fire键
   let firePressed = false // 用来记录上一个tick内 玩家是否按下过fire键
   const pressed = [] // 用来记录上一个tick内, 玩家按下过的方向键
@@ -34,8 +34,8 @@ export default function humanController(playerName, config, tank) {
     if (currentTank.size > 0) {
       tank = currentTank.get(1);
     } else {
-      document.addEventListener('keydown',onKeyDown.bind(this))
-      document.addEventListener('keyup',onKeyUp.bind(this))
+      document.addEventListener('keydown', onKeyDown.bind(this))
+      document.addEventListener('keyup', onKeyUp.bind(this))
       return false;
     }
     if (key === config.fire) {
@@ -61,10 +61,10 @@ export default function humanController(playerName, config, tank) {
     } else if (key === config.down) {
       tryPush('down')
     }
-    if(!canUpdate){
+    if (!canUpdate) {
       return false
     }
-    this.$nextTick(()=>{
+    this.$nextTick(() => {
       canUpdate = true;
       setTimeout(() => {
         directionController.call(this, playerName, getHumanPlayerInput, tank);
@@ -122,4 +122,3 @@ function getTankMoveSpeed(tank) {
     }
   }
 }
-

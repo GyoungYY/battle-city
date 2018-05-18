@@ -25,7 +25,7 @@ export default {
     },
     computed: {
         bricks(){
-            return this.$store.getters.map.bricks;
+            return this.$store.getters.bricks;
         },
         steelsList() {
             let array = [];

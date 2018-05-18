@@ -112,7 +112,7 @@ const mutations = {
   }) {
     state.TanksMap = state.TanksMap.map((tank) => {
       if (tank.tankId === movedTank.tankId) {
-        return tank.update('direction',value=> movedTank.direction);
+        return movedTank;
       } else {
         return tank;
       }
