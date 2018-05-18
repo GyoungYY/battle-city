@@ -78,16 +78,6 @@ export default {
     methods: {
        
     },
-    mounted() {
-        // this.$store.commit('addNewBullets', {
-        //     x: 70,
-        //     y: 120,
-        //     direction: 'up'
-        // });
-        // let that = this;
-        // this.$store.dispatch('handleTick');
-        // setInterval(that.$store.dispatch, 10, 'handleTick');
-    },
     components: {
         Screen,
         Hud,
