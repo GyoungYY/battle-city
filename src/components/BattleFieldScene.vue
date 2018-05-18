@@ -38,6 +38,7 @@ export default {
     },
     data() {
         return {
+            map:this.$store.getters.map,
             B,
             x: 0,
             y: 0,
@@ -50,9 +51,6 @@ export default {
 
     },
     computed: {
-        map() {
-            return this.$store.getters.map;
-        },
         eagle() {
             return this.map.toObject().eagle.toObject();
         },
