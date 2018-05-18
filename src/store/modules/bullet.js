@@ -86,34 +86,38 @@ const actions = {
         const stat = {
             tankHitMap: new DefaultMap(() => []),
             bulletCollisionInfo: new BulletCollisionInfo(state.bullets),
-            borderHint: []
+            borderHint: [],
+            brickHint: []
         }
-        // dispatch('handleBulletsCollidedWithBricks', stat);
+        dispatch('handleBulletsCollidedWithBricks', stat);
         // dispatch('handleBulletsCollidedWithSteels', stat);
         dispatch('handleBulletsCollidedWithBorder', stat);
         // const { expBullets, noExpBullets } = stat.bulletCollisionInfo.getExplosionInfo()
-        commit('destroyBullets', stat.borderHint);
-            
-    },
-    destroyEagleIfNeeded({state, commit, rootSate}, expBullets) {
-        const eagle = rootSate.eagle;
-        const eagleBox = asRect(eagle);
-        for (const bullet of expBullets.values()) {
-            const spreaded = spreadBullet(bullet)
-            if (testCollide(eagleBox, spreaded)) {
-                commit('destroyEagle');
-                return;
-            }
+        let list = stat.borderHint.concat(stat.brickHint);
+        if (list.length) {
+            commit('destroyBullets', list);
         }
     },
-    handleBulletsCollidedWithBricks({ commit, dispatch, getters, state, rootGetters}, context) {
+    // destroyEagleIfNeeded({state, commit, rootSate}, expBullets) {
+    //     const eagle = rootSate.eagle;
+    //     const eagleBox = asRect(eagle);
+    //     for (const bullet of expBullets.values()) {
+    //         const spreaded = spreadBullet(bullet)
+    //         if (testCollide(eagleBox, spreaded)) {
+    //             commit('destroyEagle');
+    //             return;
+    //         }
+    //     }
+    // },
+    handleBulletsCollidedWithBricks({ commit, dispatch, getters, state, rootGetters}, {brickHint}) {
         const bullets = state.bullets;
         const bricks = rootGetters.map.bricks;
         bullets.forEach(b => {
             const mbr = getMBR(asRect(b), asRect(lastPos(b)))
             for (const t of IndexHelper.iter('brick', mbr)) {
                 if (bricks.get(t)) {
-                    context.bulletCollisionInfo.get(b.bulletId).push({ type: 'brick', t })
+                    commit('updateMap', t);
+                    brickHint.push(b);
                 }
             }
         })
@@ -130,21 +134,20 @@ const actions = {
             }
         })
     },
-    handleBulletsCollidedWithBorder({ state, rootGetters }, context) {
+    handleBulletsCollidedWithBorder({ state, rootGetters }, {borderHint}) {
         const bullets = state.bullets;
-        console.log(context.bulletCollisionInfo);
         bullets.forEach(bullet => {
             if (bullet.x <= 0) {
-                context.borderHint.push(bullet)
+                borderHint.push(bullet)
             }
             if (bullet.x + BULLET_SIZE >= FIELD_SIZE) {
-                context.borderHint.push(bullet)
+                borderHint.push(bullet)
             }
             if (bullet.y <= 0) {
-                context.borderHint.push(bullet)
+                borderHint.push(bullet)
             }
             if (bullet.y + BULLET_SIZE >= FIELD_SIZE) {
-                context.borderHint.push(bullet)
+                borderHint.push(bullet)
             }
         })
     },
@@ -244,10 +247,9 @@ const actions = {
                 tankHitMap: new DefaultMap(() => []),
                 bulletCollisionInfo: new BulletCollisionInfo(getters.bullets)
             }
-            console.log(getters.bullets);
             dispatch('handleBulletsCollidedWithBricks', stat, )
             handleBulletsCollidedWithBricks(stat, state)
-            handleBulletsCollidedWithSteels(stat, state)
+            // handleBulletsCollidedWithSteels(stat, state)
             handleBulletsCollidedWithBorder(stat, state)
     
             const {expBullets, noExpBullets} = stat.bulletCollisionInfo.getExplosionInfo()
